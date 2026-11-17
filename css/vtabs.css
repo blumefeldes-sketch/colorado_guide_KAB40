@@ -1,0 +1,137 @@
+/* =========================================================================
+   РІВЕНЬ 3: ВЕРТИКАЛЬНІ ВКЛАДКИ (єдиний новий стиль у проєкті)
+   Усе береться з токенів оригіналу: --tab-*, --space-*, --rounded-*, --font-*.
+   Принцип: активна вкладка зливається з правою панеллю, неактивні затемнені.
+   ========================================================================= */
+.vtabs-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
+  align-items: start;
+  margin-top: var(--space-md);
+}
+.sub-panel > .vtabs-layout:first-child,
+.sub-panel > .target-banner + .vtabs-layout { margin-top: 0; }
+.target-banner { margin-bottom: var(--space-md); }
+
+.vtabs {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  position: relative;
+  z-index: 2;
+  margin-right: -1px;
+}
+
+.vtab-panel {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  background: var(--tab-panel-bg);
+  border: 1px solid var(--tab-panel-border);
+  border-radius: var(--rounded-lg);
+  border-top-left-radius: 0;
+  padding: var(--space-md);
+}
+
+/* вкладка */
+.vtabs .folder-tab.vtab {
+  width: 100%;
+  min-height: 52px;
+  justify-content: flex-start;
+  text-align: left;
+  white-space: normal;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0.55rem 0.9rem 0.55rem 1rem;
+  border: 1px solid var(--tab-border);
+  border-right-color: var(--tab-panel-border);
+  border-radius: var(--rounded-subtab) 0 0 var(--rounded-subtab);
+  overflow: hidden;
+}
+.vtabs .folder-tab.vtab .tab-cap { border-radius: inherit; }
+.vtabs .folder-tab.vtab .tab-cap::before { display: none; }
+
+.vtab-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.vtabs .folder-tab.vtab .vtab-text { overflow: visible; text-overflow: clip; }
+.vtab-title {
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  color: var(--on-surface);
+  overflow-wrap: anywhere;
+}
+.vtab-meta {
+  font-family: var(--font-label);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--on-surface-variant);
+}
+.vtab-trail {
+  display: inline-flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.vtabs .folder-tab.vtab .vtab-trail { overflow: visible; }
+
+/* активна: зливається з панеллю, кольорова смужка зліва */
+.vtabs .folder-tab.vtab.active {
+  margin: 0 -1px 0 0;
+  padding: 0.55rem 0.9rem 0.55rem 1rem;
+  overflow: visible;
+  background: var(--tab-panel-bg);
+  border: 1px solid var(--tab-panel-border);
+  border-right: 0;
+}
+.vtabs .folder-tab.vtab.active::after {
+  top: 1px;
+  bottom: 1px;
+  left: auto;
+  right: -2px;
+  width: 3px;
+  height: auto;
+  background: var(--tab-panel-bg);
+}
+.vtabs .folder-tab.vtab.active .tab-cap { display: block; }
+.vtabs .folder-tab.vtab.active .tab-cap::before {
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: auto;
+  width: var(--rounded-subtab);
+  height: auto;
+  box-sizing: border-box;
+  background: none;
+  border: 0;
+  border-left: 4px solid var(--tab-accent);
+  border-radius: var(--rounded-subtab) 0 0 var(--rounded-subtab);
+}
+.vtabs .folder-tab.vtab.is-dimmed:not(.active) { opacity: 0.55; }
+.vtabs .folder-tab.vtab:focus-visible { outline: 3px solid var(--tab-accent); outline-offset: -3px; }
+
+/* карта в правій панелі займає всю її ширину */
+.vtab-panel .zones-grid { margin: 0; }
+
+/* вузькі екрани: вкладки над панеллю */
+@media (max-width: 860px) {
+  .vtabs-layout { grid-template-columns: minmax(0, 1fr); }
+  .vtabs { margin-right: 0; margin-bottom: var(--space-sm, 0.5rem); }
+  .vtabs .folder-tab.vtab,
+  .vtabs .folder-tab.vtab.active {
+    margin: 0;
+    border-radius: var(--rounded-subtab);
+    border: 1px solid var(--tab-border);
+  }
+  .vtabs .folder-tab.vtab.active { border-color: var(--tab-accent); border-left-width: 4px; }
+  .vtabs .folder-tab.vtab.active::after,
+  .vtabs .folder-tab.vtab.active .tab-cap::before { display: none; }
+  .vtab-panel { border-radius: var(--rounded-lg); }
+}

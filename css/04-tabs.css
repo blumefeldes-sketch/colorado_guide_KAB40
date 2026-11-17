@@ -1,0 +1,244 @@
+    /* =====================================================================
+       УНІФІКОВАНА АРХІТЕКТУРА ВКЛАДОК-ТЕК (TOP TABS, SUBTABS, VERTICAL TABS)
+       ===================================================================== */
+    .tabs-shell {
+      display: flex;
+      flex-direction: column;
+    }
+    .top-tabs-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 3px;
+      padding: 0 var(--space-xs);
+    }
+    .subtabs-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 3px;
+      padding: 0 var(--space-xs);
+      margin-top: var(--space-md);
+    }
+
+    /* Спільний базовий клас папки-вкладки для всіх рівнів */
+    .folder-tab {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: var(--rounded-tab) var(--rounded-tab) 0 0;
+      overflow: hidden;
+      border: 1px solid var(--tab-border);
+      background: var(--tab-idle-bg);
+      color: var(--on-surface);
+      cursor: pointer;
+      min-height: 46px;
+      padding: 0.65rem 1.15rem;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      text-align: left;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .folder-tab:hover:not(.active) {
+      background: var(--tab-hover-bg);
+    }
+
+    /* Внутрішній контейнер для верхньої кольорової смуги, щоб повторював заокруглення без зрізів */
+    .folder-tab .tab-cap {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .folder-tab .tab-cap::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--tab-accent);
+    }
+
+    /* Менший варіант для підвкладок (Row 2) */
+    .folder-tab.subtab {
+      border-radius: var(--rounded-subtab) var(--rounded-subtab) 0 0;
+      min-height: 44px;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.875rem;
+    }
+    .folder-tab.subtab .tab-cap::before {
+      height: 3.5px;
+    }
+
+    /* ЄДИНЕ УНІФІКОВАНЕ ПРАВИЛО ДЛЯ АКТИВНОЇ ВКЛАДКИ НА ВСІХ РІВНЯХ */
+    .folder-tab.active {
+      position: relative;
+      z-index: 2;
+      overflow: visible;
+      background: var(--tab-panel-bg);
+      border-color: var(--tab-panel-border);
+      border-bottom: none;
+      color: var(--on-surface);
+      box-shadow: none;
+    }
+    .folder-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--tab-panel-bg);
+      pointer-events: none;
+      z-index: 3;
+    }
+    /* Підтримка вертикального режиму в цьому ж уніфікованому правилі */
+    .folder-tab.vertical.active {
+      border-right: none;
+      border-bottom: 1px solid var(--tab-panel-border);
+    }
+    .folder-tab.vertical.active::after {
+      top: 0;
+      bottom: 0;
+      left: auto;
+      right: -2px;
+      width: 3px;
+      height: auto;
+    }
+
+    .tab-num {
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--tab-accent);
+      letter-spacing: 0.04em;
+    }
+
+    /* Колірні змінні для 4 секцій (Топ-рівень) */
+    .theme-stories {
+      --tab-accent: var(--tab1-accent);
+      --tab-idle-bg: var(--tab1-idle-bg);
+      --tab-hover-bg: var(--tab1-hover-bg);
+      --tab-border: var(--tab1-panel-border);
+      --tab-panel-bg: var(--tab1-panel-bg);
+      --tab-panel-border: var(--tab1-panel-border);
+    }
+    .theme-routes {
+      --tab-accent: var(--tab2-accent);
+      --tab-idle-bg: var(--tab2-idle-bg);
+      --tab-hover-bg: var(--tab2-hover-bg);
+      --tab-border: var(--tab2-panel-border);
+      --tab-panel-bg: var(--tab2-panel-bg);
+      --tab-panel-border: var(--tab2-panel-border);
+    }
+    .theme-zones {
+      --tab-accent: var(--tab3-accent);
+      --tab-idle-bg: var(--tab3-idle-bg);
+      --tab-hover-bg: var(--tab3-hover-bg);
+      --tab-border: var(--tab3-panel-border);
+      --tab-panel-bg: var(--tab3-panel-bg);
+      --tab-panel-border: var(--tab3-panel-border);
+    }
+    .theme-disguises {
+      --tab-accent: var(--tab4-accent);
+      --tab-idle-bg: var(--tab4-idle-bg);
+      --tab-hover-bg: var(--tab4-hover-bg);
+      --tab-border: var(--tab4-panel-border);
+      --tab-panel-bg: var(--tab4-panel-bg);
+      --tab-panel-border: var(--tab4-panel-border);
+    }
+
+    /* Колірні змінні для підвкладок (Рівень 2) всередині кожної секції */
+    .section-panel[data-section="stories"] {
+      --sec-bg: var(--tab1-panel-bg);
+      --sec-border: var(--tab1-panel-border);
+      --sec-accent: var(--tab1-accent);
+      --tab-accent: var(--tab1-accent);
+      --tab-idle-bg: var(--tab1-sub-idle);
+      --tab-hover-bg: var(--tab1-sub-hover);
+      --tab-border: var(--tab1-sub-border);
+      --tab-panel-bg: var(--tab1-sub-panel);
+      --tab-panel-border: var(--tab1-sub-border);
+    }
+    .section-panel[data-section="routes"] {
+      --sec-bg: var(--tab2-panel-bg);
+      --sec-border: var(--tab2-panel-border);
+      --sec-accent: var(--tab2-accent);
+      --tab-accent: var(--tab2-accent);
+      --tab-idle-bg: var(--tab2-sub-idle);
+      --tab-hover-bg: var(--tab2-sub-hover);
+      --tab-border: var(--tab2-sub-border);
+      --tab-panel-bg: var(--tab2-sub-panel);
+      --tab-panel-border: var(--tab2-sub-border);
+    }
+    .section-panel[data-section="zones"] {
+      --sec-bg: var(--tab3-panel-bg);
+      --sec-border: var(--tab3-panel-border);
+      --sec-accent: var(--tab3-accent);
+      --tab-accent: var(--tab3-accent);
+      --tab-idle-bg: var(--tab3-sub-idle);
+      --tab-hover-bg: var(--tab3-sub-hover);
+      --tab-border: var(--tab3-sub-border);
+      --tab-panel-bg: var(--tab3-sub-panel);
+      --tab-panel-border: var(--tab3-sub-border);
+    }
+    .section-panel[data-section="disguises"] {
+      --sec-bg: var(--tab4-panel-bg);
+      --sec-border: var(--tab4-panel-border);
+      --sec-accent: var(--tab4-accent);
+      --tab-accent: var(--tab4-accent);
+      --tab-idle-bg: var(--tab4-sub-idle);
+      --tab-hover-bg: var(--tab4-sub-hover);
+      --tab-border: var(--tab4-sub-border);
+      --tab-panel-bg: var(--tab4-sub-panel);
+      --tab-panel-border: var(--tab4-sub-border);
+    }
+
+    /* Контейнер головної секції (під Row 1) */
+    .section-panel {
+      position: relative;
+      z-index: 1;
+      margin-top: -1px;
+      background: var(--sec-bg);
+      border: 1px solid var(--sec-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+    }
+    .section-panel[hidden] { display: none; }
+
+    /* Контейнер підсекції (під Row 2) */
+    .sub-panel {
+      position: relative;
+      z-index: 1;
+      margin-top: -1px;
+      background: var(--tab-panel-bg);
+      border: 1px solid var(--tab-panel-border);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+    }
+
+    .section-lead {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+    .section-lead h2 {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 700;
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .section-lead p {
+      margin: 0.25rem 0 0 0;
+      color: var(--on-surface-variant);
+      max-width: 70ch;
+      font-size: 0.9375rem;
+    }
+
