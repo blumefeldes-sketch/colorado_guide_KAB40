@@ -1,0 +1,183 @@
+    /* ===== ВИПРАВЛЕННЯ: рівномірні закладки та чистий стик ===== */
+
+    /* 1. Ряди закладок: однакова ширина, рівні просвіти, по всій ширині блоку */
+    .top-tabs-row,
+    .subtabs-row {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
+      gap: 10px;
+      align-items: end;
+      flex-wrap: nowrap;
+      padding: 0;
+    }
+
+    /* 2. Закладка: текст по центру, довгі назви скорочуються, без переносу */
+    .folder-tab {
+      justify-content: center;
+      text-align: center;
+      min-width: 0;
+      white-space: nowrap;
+    }
+    .folder-tab > span:not(.tab-cap):not(.tab-num):not(.avatar-circle):not(.avatar-wrap) {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .folder-tab.active {
+      overflow: visible;
+    }
+
+    /* 3. Стик активної закладки з блоком: прибираємо рисочку */
+    .section-panel,
+    .sub-panel {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+    .folder-tab.active {
+      margin-bottom: -1px;
+      border-bottom: 0;
+    }
+    .folder-tab.active::after {
+      left: -1px;
+      right: -1px;
+      bottom: -2px;
+      height: 4px;
+    }
+
+    /* 4. Вузькі екрани: у закладках лишаються номери й аватарки */
+    @media (max-width: 640px) {
+      .top-tabs-row,
+      .subtabs-row { gap: 5px; }
+      .top-tabs-row .folder-tab > span:last-child,
+      .subtabs-row .folder-tab > span:last-child { display: none; }
+    }
+
+    /* ===== Правки: карта на всю ширину, список і паспорт під нею ===== */
+    .zones-grid { grid-template-columns: minmax(0, 1fr) !important; }
+    .map-viewport { height: min(78vh, 780px); min-height: 420px; display: flex; justify-content: center; }
+    .map-stage { position: relative; inset: auto; height: 100%; aspect-ratio: 535 / 674; flex: none; }
+    .map-img { object-fit: contain; }
+    #map-pins-layer { position: absolute; inset: 0; pointer-events: none; }
+    .map-ph { position: absolute; inset: 0; margin: auto; width: max-content; height: max-content; padding: 0.6rem 1rem; border: 2px dashed var(--outline); background: var(--surface-container-low); color: var(--on-surface); font-family: var(--font-label); }
+    .map-zone { position: absolute; pointer-events: auto; display: flex; align-items: flex-start; padding: 0; cursor: pointer; z-index: 2; border: 2px solid var(--tab3-accent); border-radius: 4px; background: color-mix(in srgb, var(--tab3-accent) 14%, transparent); font-family: var(--font-label); font-size: 0.62rem; font-weight: 700; color: var(--on-surface); transition: background-color var(--dur-micro) var(--ease-out); }
+    .map-zone span { background: var(--surface-container-low); padding: 0 0.25rem; border-radius: 0 0 4px 0; pointer-events: none; }
+    .map-zone:hover, .map-zone:focus-visible { background: color-mix(in srgb, var(--tab3-accent) 32%, transparent); outline: 2px solid var(--outline); outline-offset: 1px; }
+    .map-zone.active { border-color: var(--outline); border-width: 3px; background: color-mix(in srgb, var(--tab3-accent) 38%, transparent); box-shadow: 0 0 0 3px var(--tab3-accent); z-index: 4; }
+    .map-zone.is-dimmed { opacity: 0.4; }
+    .zones-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); max-height: none; overflow: visible; }
+    .zones-list .zone-summary { display: none; }
+
+    /* Фото цілей + іконка ролі в куті */
+    .avatar-wrap { position: relative; display: inline-flex; flex-shrink: 0; }
+    .avatar-wrap .avatar-circle img { object-fit: cover; object-position: center; }
+    .avatar-role { position: absolute; right: -6px; bottom: -6px; width: 19px; height: 19px; border-radius: 50%; border: 1.5px solid; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 0 0 1.5px #fff; }
+    .avatar-role img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .avatar-wrap:has(.avatar-56) .avatar-role { width: 30px; height: 30px; right: -8px; bottom: -8px; }
+
+    /* Іконка професії в кінці імені та прізвища */
+    .role-icon { width: 26px; height: 26px; margin-left: 0.4rem; vertical-align: middle; display: inline-block; flex-shrink: 0; }
+
+    .role-icon-sm { width: 18px; height: 18px; margin-left: 0.3rem; }
+    .scenario-who { display: flex; align-items: center; font-family: var(--font-label); font-size: 0.72rem; font-weight: 700; margin-bottom: 0.15rem; }
+
+    /* Розміри: фото ×1.5, іконка професії +80% */
+    .avatar-28 { width: 42px; height: 42px; font-size: 1rem; }
+    .avatar-30 { width: 45px; height: 45px; font-size: 1.05rem; }
+    .avatar-56 { width: 84px; height: 84px; font-size: 1.7rem; }
+    .role-icon { width: 47px; height: 47px; }
+    .role-icon-sm { width: 32px; height: 32px; }
+    /* Іконки маскувань */
+    .dis-name { display: inline-flex; align-items: center; gap: 0.5rem; }
+    .dis-icon { width: 32px; height: 32px; flex-shrink: 0; }
+    .dis-icon-lg { width: 44px; height: 44px; }
+    .dis-head { display: flex; align-items: center; gap: 0.6rem; }
+
+    /* Список зон: аватари під назвою, ближче до тексту */
+    .zones-list .zone-btn-top { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    /* Іконки маскувань у паспорті зони та на карті */
+    .dis-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.6rem; }
+    .dis-chip { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.15rem 0.55rem 0.15rem 0.2rem; border: 1px solid var(--outline-variant); border-radius: 99px; background: var(--surface-container); font-size: 0.75rem; font-weight: 600; }
+    .dis-icon-sm { width: 24px; height: 24px; }
+    .map-zone { overflow: hidden; }
+    .map-dis { position: absolute; left: 2px; bottom: 2px; display: flex; flex-wrap: wrap; gap: 2px; max-width: calc(100% - 4px); pointer-events: none; }
+    .dis-icon-map { width: 20px; height: 20px; border-radius: 50%; box-shadow: 0 0 0 1.5px #fff; }
+
+    /* Смужка закладки огортає заокруглення по всій його висоті; між закладками є проміжок */
+    .folder-tab .tab-cap::before { top: 0; left: 0; right: 0; bottom: auto; height: var(--rounded-tab); box-sizing: border-box; background: none; border-top: 4px solid var(--tab-accent); border-left: 2px solid var(--tab-accent); border-right: 2px solid var(--tab-accent); border-radius: var(--rounded-tab) var(--rounded-tab) 0 0; }
+    .folder-tab.subtab .tab-cap::before { height: var(--rounded-subtab); border-top-width: 3.5px; border-left-width: 1.5px; border-right-width: 1.5px; border-radius: var(--rounded-subtab) var(--rounded-subtab) 0 0; }
+    .top-tabs-row, .subtabs-row { gap: 8px; }
+    @media (max-width: 640px) { .top-tabs-row, .subtabs-row { gap: 5px; } }
+
+    /* ===== Бічні закладки верхнього рівня (стиль зі зразка; підзакладки не змінюються) ===== */
+    .tabs-shell { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; }
+    .tabs-shell > .section-panel { grid-column: 1; grid-row: 1; margin-top: 0; border-radius: var(--rounded-lg); }
+    .top-tabs-row { grid-column: 2; grid-row: 1; align-self: start; position: relative; z-index: 3; margin-left: -1px; padding: 1.25rem 0 0; display: grid; grid-auto-flow: row; grid-auto-columns: auto; grid-auto-rows: 1fr; align-items: stretch; gap: 8px; }
+    .top-tabs-row .folder-tab { flex-direction: column; justify-content: flex-start; align-items: center; gap: 0.7rem; width: 3.5rem; min-height: 0; padding: 0.9rem 0.4rem; border: 2px solid var(--outline); border-left: 0; border-radius: 0 var(--rounded-tab) var(--rounded-tab) 0; overflow: hidden; font-size: 0.95rem; }
+    .top-tabs-row .folder-tab .tab-cap { display: none; }
+    .top-tabs-row .folder-tab .tab-num { background: var(--tab-accent); color: #fff; padding: 0.1rem 0.4rem; border-radius: 4px; }
+    .top-tabs-row .folder-tab > span:last-child { writing-mode: vertical-rl; transform: rotate(180deg); overflow: visible; text-overflow: clip; white-space: nowrap; }
+    .top-tabs-row .folder-tab.active { margin: 0 0 0 -2px; border: 2px solid var(--outline); border-left: 0; overflow: visible; font-weight: 700; }
+    .top-tabs-row .folder-tab.active::after { left: -4px; right: auto; top: 0; bottom: 0; width: 6px; height: auto; }
+    @media (max-width: 640px) {
+      .top-tabs-row .folder-tab { width: 2.7rem; min-height: 4rem; padding: 0.7rem 0.25rem; }
+    }
+
+    /* ===== Палітра закладок і розділів — як на зразку ===== */
+    :root {
+      --tab1-accent: #8c4e0e; --tab1-panel-bg: #e9dcc3; --tab1-panel-border: #cbb996; --tab1-idle-bg: #d5c29f; --tab1-hover-bg: #c9b48a;
+      --tab1-sub-idle: #f0e6d2; --tab1-sub-hover: #e3d4b5; --tab1-sub-panel: #fbf7ee; --tab1-sub-border: #d6c6a2;
+      --tab2-accent: #245542; --tab2-panel-bg: #dde5da; --tab2-panel-border: #b6c6b1; --tab2-idle-bg: #b8c9b2; --tab2-hover-bg: #a8bca1;
+      --tab2-sub-idle: #e8efe5; --tab2-sub-hover: #d3dfcf; --tab2-sub-panel: #f6f9f4; --tab2-sub-border: #c2d1bd;
+      --tab3-accent: #1f3a4d; --tab3-panel-bg: #dce2e8; --tab3-panel-border: #b4c0cd; --tab3-idle-bg: #2b3a47; --tab3-hover-bg: #38495a;
+      --tab3-sub-idle: #e7edf2; --tab3-sub-hover: #d3dce5; --tab3-sub-panel: #f5f7f9; --tab3-sub-border: #c0cbd6;
+      --tab4-accent: #a4261e; --tab4-panel-bg: #efe1dc; --tab4-panel-border: #d1b6ad; --tab4-idle-bg: #9e2a22; --tab4-hover-bg: #b13a30;
+      --tab4-sub-idle: #f6ebe7; --tab4-sub-hover: #e8d5ce; --tab4-sub-panel: #fcf7f5; --tab4-sub-border: #dcc3bb;
+    }
+    .theme-stories { --tab-pill: #f2b705; --tab-pill-ink: #17181a; }
+    .theme-routes { --tab-pill: #3f7c63; --tab-pill-ink: #fff; }
+    .theme-zones { --tab-pill: #355d78; --tab-pill-ink: #fff; }
+    .theme-disguises { --tab-pill: #b42318; --tab-pill-ink: #fff; }
+
+    /* Декоративна смужка — лише в активних закладках усіх рівнів */
+    .folder-tab:not(.active) .tab-cap::before { display: none; }
+
+    /* Бічні закладки: текст згори вниз, відступи більші, кольори зі зразка */
+    .top-tabs-row { gap: 12px; }
+    .top-tabs-row .folder-tab { border-color: #17181a; color: #17181a; }
+    .top-tabs-row .folder-tab.theme-zones:not(.active),
+    .top-tabs-row .folder-tab.theme-disguises:not(.active) { color: #f5f7f9; }
+    .top-tabs-row .folder-tab > span:last-child { transform: none; }
+    .top-tabs-row .folder-tab .tab-num { background: rgba(255, 255, 255, 0.4); color: inherit; }
+    .top-tabs-row .folder-tab.theme-zones:not(.active) .tab-num,
+    .top-tabs-row .folder-tab.theme-disguises:not(.active) .tab-num { background: rgba(255, 255, 255, 0.25); }
+    .top-tabs-row .folder-tab.active { color: #17181a; }
+    .top-tabs-row .folder-tab.active .tab-num { background: var(--tab-pill); color: var(--tab-pill-ink); }
+    .top-tabs-row .folder-tab.active .tab-cap { display: block; }
+    .top-tabs-row .folder-tab.active .tab-cap::before { display: block; top: 0; bottom: 0; right: 0; left: auto; height: auto; width: var(--rounded-tab); box-sizing: border-box; background: none; border: 0; border-top: 2px solid var(--tab-accent); border-bottom: 2px solid var(--tab-accent); border-right: 5px solid var(--tab-accent); border-radius: 0 var(--rounded-tab) var(--rounded-tab) 0; }
+
+    /* ===== Бічні закладки: тоншa, елегантніша форма як на зразку ===== */
+    .top-tabs-row { grid-auto-rows: auto; align-items: start; justify-items: start; gap: 12px; }
+    .top-tabs-row .folder-tab { width: auto; gap: 10px; padding: 18px 14px 18px 16px; border-width: 1.5px; border-radius: 0 10px 10px 0; font-size: 14px; font-weight: 600; }
+    .top-tabs-row .folder-tab.active { border-width: 1.5px; font-weight: 700; padding-right: 18px; }
+    .top-tabs-row .folder-tab .tab-num { font-size: 11px; padding: 2px 6px; }
+    .top-tabs-row .folder-tab.active .tab-cap::before { width: 12px; border-top: 0; border-bottom: 0; border-right: 4px solid var(--tab-accent); border-radius: 0 10px 10px 0; }
+    .tabs-shell > .section-panel { border-right: 1.5px solid #17181a; }
+    @media (max-width: 640px) {
+      .top-tabs-row .folder-tab { padding: 12px 8px; min-height: 0; width: auto; }
+    }
+
+    /* Лінія краю сторінки видна вздовж кожної неактивної закладки та в проміжках між ними; біля активної вона зникає */
+    .top-tabs-row { margin-left: -1.5px; }
+    .top-tabs-row .folder-tab:not(.active) { border-left: 1.5px solid #17181a; }
+
+    /* Активна підзакладка не нижча за інші: трохи вище */
+    .folder-tab.subtab.active { padding-top: calc(0.45rem + 4px); }
+
+    /* Випадний список зон: стиль зі зразка */
+    .matrix-controls .filter-group { gap: 0.5rem; }
+    .matrix-controls .filter-group label { font-family: var(--font-label); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.02em; color: var(--on-surface); }
+    .matrix-controls .filter-select { width: 100%; min-width: min(100%, 420px); padding: 0.7rem 2.6rem 0.7rem 1rem; font-family: var(--font-body); font-size: 1rem; font-weight: 600; color: var(--on-surface); background-color: var(--surface-container-low); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2317181a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; border: 1.5px solid #17181a; border-radius: 6px; appearance: none; -webkit-appearance: none; cursor: pointer; }
+    .matrix-controls .filter-select:hover { border-color: var(--tab-accent); }
+    .matrix-controls .filter-select:focus, .matrix-controls .filter-select:focus-visible { outline: 3px solid var(--tab-accent); outline-offset: 0; border-color: var(--tab-accent); }
+    .matrix-controls .filter-select option { font-size: 1rem; font-weight: 500; padding: 0.4rem 0.6rem; }

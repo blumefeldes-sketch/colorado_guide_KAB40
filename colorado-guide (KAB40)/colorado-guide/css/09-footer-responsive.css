@@ -1,0 +1,30 @@
+    /* Примітка про джерела внизу */
+    .sources-footer {
+      border-top: var(--section-rule);
+      padding-top: var(--space-md);
+      font-size: 0.82rem;
+      color: var(--on-surface-muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    /* Мобільна адаптація */
+    @media (max-width: 640px) {
+      .page-grid { padding: var(--space-sm); gap: var(--space-md); }
+      .header-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .section-panel, .sub-panel { padding: var(--space-md); }
+      .folder-tab { padding: 0.55rem 0.75rem; font-size: 0.85rem; }
+      .folder-tab.subtab { padding: 0.4rem 0.65rem; font-size: 0.8rem; }
+      .map-viewport { height: 320px; min-height: 300px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+

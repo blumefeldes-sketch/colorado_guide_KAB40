@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[Колорадо]: тактичний довідник — Борці за свободу</title>
+  <meta name="description" content="Інтерактивний тактичний довідник: сюжетні лінії, маршрути, зони доступу та маскування.">
+  <link rel="icon" href="assets/icons/disguises/suit.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/00-fonts.css">
+  <link rel="stylesheet" href="css/01-tokens.css">
+  <link rel="stylesheet" href="css/02-base.css">
+  <link rel="stylesheet" href="css/03-header.css">
+  <link rel="stylesheet" href="css/04-tabs.css">
+  <link rel="stylesheet" href="css/05-targets-stories.css">
+  <link rel="stylesheet" href="css/06-routes.css">
+  <link rel="stylesheet" href="css/07-zones.css">
+  <link rel="stylesheet" href="css/08-disguises.css">
+  <link rel="stylesheet" href="css/09-footer-responsive.css">
+  <link rel="stylesheet" href="css/10-refinements.css">
+  <link rel="stylesheet" href="css/vtabs.css">
+</head>
+ <body>
+  <div class="page-grid">
+   <!-- ХЕДЕР: статичний світло-сірий (#F0F2F5) -->
+   <header class="dossier-header">
+    <div class="dossier-bar">
+     <div class="dossier-bar-left">
+      <span class="dossier-pill">ДОСЬЄ · БРИФІНГ ICA</span> <span class="dossier-meta">ОПЕРАЦІЯ: БОРЦІ ЗА СВОБОДУ · КОЛОРАДО, США</span>
+     </div>
+     <div class="header-actions">
+      <span id="save-status" class="save-status" aria-live="polite"> <span class="save-dot" aria-hidden="true"></span> <span id="save-status-text">Збережено</span> </span> <button type="button" class="btn btn-primary" data-action="export-plan"> 
+       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
+       </svg> Експорт плану (.txt) 
+      </button> <button type="button" id="reset-progress-btn" class="btn" data-action="reset-progress"> 
+       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <polyline points="1 4 1 10 7 10" /><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+       </svg> Скинути прогрес 
+      </button>
+     </div>
+    </div>
+    <h1 class="dossier-title">[Колорадо]: тактичний довідник</h1>
+    <p class="dossier-subtitle">Інтерактивний польовий довідник для місії «Борці за свободу»: чотири ключові цілі, сюжетні усунення, маршрути Silent Assassin / Suit Only, інтерактивна карта секторів безпеки та матриця маскувань ферми ополчення.</p>
+    <div class="header-stats">
+     <div class="stat-tile">
+      <div class="stat-info">
+       <span class="stat-label">Цілі операції</span> <span class="stat-sub">Чотири цілі</span>
+      </div>
+      <span class="stat-value">4</span>
+     </div>
+     <div class="stat-tile">
+      <div class="stat-info">
+       <span class="stat-label">Камери</span> <span class="stat-sub">Спостереження та пульт</span>
+      </div>
+      <span class="stat-value">9</span>
+     </div>
+     <div class="stat-tile">
+      <div class="stat-info">
+       <span class="stat-label">Виходи</span> <span class="stat-sub">Бункер, ATV, периметр</span>
+      </div>
+      <span class="stat-value">4</span>
+     </div>
+     <div class="stat-tile">
+      <div class="stat-info">
+       <span class="stat-label">Сховки</span> <span class="stat-sub">Ящики, шафи, сіно</span>
+      </div>
+      <span class="stat-value">18</span>
+     </div>
+    </div>
+   </header>
+   <!-- ОСНОВНА ОБОЛОНКА З ВКЛАДКАМИ -->
+   <main class="tabs-shell">
+    <!-- РІВЕНЬ 1: Чотири вкладки-теки -->
+    <div class="top-tabs-row" role="tablist" aria-label="Основні розділи довідника">
+     <button type="button" id="top-tab-stories" class="folder-tab theme-stories active" role="tab" aria-selected="true" data-action="top-tab" data-tab="stories"> <span class="tab-cap" aria-hidden="true"></span> <span class="tab-num">01</span> <span>Сюжетні лінії</span> </button> <button type="button" id="top-tab-routes" class="folder-tab theme-routes" role="tab" aria-selected="false" data-action="top-tab" data-tab="routes"> <span class="tab-cap" aria-hidden="true"></span> <span class="tab-num">02</span> <span>Маршрути</span> </button> <button type="button" id="top-tab-zones" class="folder-tab theme-zones" role="tab" aria-selected="false" data-action="top-tab" data-tab="zones"> <span class="tab-cap" aria-hidden="true"></span> <span class="tab-num">03</span> <span>Зони доступу</span> </button> <button type="button" id="top-tab-disguises" class="folder-tab theme-disguises" role="tab" aria-selected="false" data-action="top-tab" data-tab="disguises"> <span class="tab-cap" aria-hidden="true"></span> <span class="tab-num">04</span> <span>Маскування</span> </button>
+    </div>
+    <!-- СЕКЦІЯ 01: СЮЖЕТНІ ЛІНІЇ -->
+    <section id="panel-stories" class="section-panel" data-section="stories" role="tabpanel" aria-labelledby="top-tab-stories">
+     <div class="section-lead">
+      <div>
+       <h2>Сюжетні лінії та випробування усунення</h2>
+       <p>Фільтруйте сценарії за конкретним антагоністом і відмічайте виконані етапи — прогрес автоматично зберігається.</p>
+      </div>
+      <span id="stories-progress-badge" class="row-counter">Виконано: 0 / 0 кроків</span>
+     </div>
+     <div id="subtabs-stories" class="subtabs-row" role="tablist" aria-label="Фільтр цілей для сюжетних ліній"></div>
+     <div id="subpanel-stories" class="sub-panel"></div>
+    </section>
+    <!-- СЕКЦІЯ 02: МАРШРУТИ -->
+    <section id="panel-routes" class="section-panel" data-section="routes" role="tabpanel" aria-labelledby="top-tab-routes" hidden>
+     <div class="section-lead">
+      <div>
+       <h2>Маршрути Silent Assassin / Suit Only та майстер-плани</h2>
+       <p>Покрокові тактичні маршрути без втрати рейтингу стелсу, чеклісти спорядження, таймінги охорони та точки сховку тіл.</p>
+      </div>
+      <span id="routes-progress-badge" class="row-counter">Кроків маршруту: 0 / 0</span>
+     </div>
+     <div id="subtabs-routes" class="subtabs-row" role="tablist" aria-label="Фільтр цілей для маршрутів"></div>
+     <div id="subpanel-routes" class="sub-panel"></div>
+    </section>
+    <!-- СЕКЦІЯ 03: ЗОНИ ДОСТУПУ -->
+    <section id="panel-zones" class="section-panel" data-section="zones" role="tabpanel" aria-labelledby="top-tab-zones" hidden>
+     <div class="section-lead">
+      <div>
+       <h2>Зони доступу, сектори охорони та проходи</h2>
+       <p>Оберіть сектор на карті або у списку вкладок ліворуч, щоб переглянути повний паспорт зони. Підвкладки підсвічують зони маршруту кожної цілі.</p>
+      </div>
+      <span class="row-counter">Секторів: 10 · Камер: 9 · Виходів: 4</span>
+     </div>
+     <div id="subtabs-zones" class="subtabs-row" role="tablist" aria-label="Фільтр зон за цілями"></div>
+     <div id="subpanel-zones" class="sub-panel">
+      <div class="vtabs-layout">
+       <!-- РІВЕНЬ 3: вертикальні вкладки зон (вибір на карті та у списку — один стан) -->
+       <div id="zones-list" class="vtabs" role="tablist" aria-orientation="vertical" aria-label="Сектори бази Колорадо"></div>
+       <div class="vtab-panel" role="tabpanel" aria-live="polite">
+        <div class="zones-grid">
+       <div class="map-card">
+        <div class="map-toolbar">
+         <span class="map-toolbar-title">Тактична схема периметра Колорадо</span>
+         <div class="map-controls">
+          <button type="button" class="btn" aria-label="Зменшити масштаб" data-action="zoom-map" data-delta="-0.2">−</button> <button type="button" class="btn" aria-label="Скинути масштаб" data-action="reset-map">Скинути</button> <button type="button" class="btn" aria-label="Збільшити масштаб" data-action="zoom-map" data-delta="0.2">+</button>
+         </div>
+        </div>
+        <div id="map-viewport" class="map-viewport">
+         <div id="map-stage" class="map-stage">
+          <img id="map-photo-layer" class="map-img" alt="Тактична карта локації Колорадо">
+          <div id="map-svg-fallback" class="map-ph" style="display:none">Тут буде карта</div>
+          <div id="map-pins-layer"></div>
+         </div>
+        </div>
+        <div class="map-legend">
+         <span>Натисніть маркер зони для перегляду паспорта нижче · Перетягуйте для огляду</span> <span id="map-source-status" class="map-source-note">Підкладка: map.png</span>
+        </div>
+       </div>
+        </div>
+        <!-- Паспорт зони -->
+        <div id="zone-passport" class="zone-passport" aria-live="polite"></div>
+       </div>
+      </div>
+     </div>
+    </section>
+    <!-- СЕКЦІЯ 04: МАСКУВАННЯ -->
+    <section id="panel-disguises" class="section-panel" data-section="disguises" role="tabpanel" aria-labelledby="top-tab-disguises" hidden>
+     <div class="section-lead">
+      <div>
+       <h2>Матриця маскувань та рівнів доступу</h2>
+       <p>Фільтруйте доступ за мікролокаціями та натисніть на будь-який рядок таблиці, щоб відкрити детальний паспорт ризику форми.</p>
+      </div>
+     </div>
+     <div id="subtabs-disguises" class="subtabs-row" role="tablist" aria-label="Фільтр маскувань за цілями"></div>
+     <div id="subpanel-disguises" class="sub-panel">
+      <div class="vtabs-layout">
+       <!-- РІВЕНЬ 3: вертикальні вкладки мікролокацій (замість випадного списку) -->
+       <div id="micro-location-tabs" class="vtabs" role="tablist" aria-orientation="vertical" aria-label="Мікролокація бази"></div>
+       <div class="vtab-panel" role="tabpanel">
+        <div class="matrix-controls">
+         <div class="filter-group">
+          <label id="micro-location-label">Куди потрібно потрапити?</label>
+         </div>
+         <span id="disguise-row-count" class="row-counter">Показано 0 із 0 маскувань</span>
+        </div>
+      <div class="table-wrap">
+       <table class="disguise-table">
+        <thead>
+         <tr>
+          <th>Маскування</th>
+          <th>Периметр</th>
+          <th>Сарай / Полігон</th>
+          <th>Гараж / Двір</th>
+          <th>Поле вибухівки</th>
+          <th>Головний будинок</th>
+          <th>Підвал</th>
+          <th>Табір / Яма</th>
+         </tr>
+        </thead>
+        <tbody id="disguise-table-body"></tbody>
+       </table>
+      </div>
+        <div id="risk-passport" class="risk-passport" aria-live="polite"></div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </main>
+   <footer class="sources-footer">
+    <span>Джерела: тактичні розбори та нотатки місії «Борці за свободу» (Колорадо) — тихе усунення, сюжетні лінії, Silent Assassin / Suit Only, схеми зон та маскувань.</span> <span>Стан зберігається локально у браузері (localStorage).</span>
+   <span>Неофіційний фанатський некомерційний проєкт, не пов’язаний з IO Interactive. Hitman, назви, карти та зображення персонажів належать їхнім правовласникам.</span>
+   </footer>
+  </div>
+<noscript><p style="padding:1rem">Для роботи довідника потрібен JavaScript.</p></noscript>
+  <script>
+    // Модулі та fetch не працюють через file:// — підказуємо запустити сервер
+    if (location.protocol === 'file:') {
+      document.querySelector('.tabs-shell').insertAdjacentHTML('beforebegin',
+        '<p role="alert" style="padding:1rem;margin:1rem 0;border:2px solid #a4261e;background:#fcf7f5;">Відкрийте сайт через сервер (GitHub Pages, Firebase Hosting або локально: <code>npx serve</code>), а не подвійним кліком по index.html.</p>');
+    }
+  </script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
